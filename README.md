@@ -21,4 +21,12 @@ Qwen2.5-32B-Instruct-AWQ:
 
 It takes me about 1 hour to quantize Qwen2.5-32B-Instruct by AWQ algorithm.
 
-The performance is good, however, Tesla-V100 do not support AWQ model.
+The performance is good, however, Tesla-V100 do not support AWQ model. 
+
+### Requirements
+
+```sh
+conda create -n llm-compressor python=3.12 -y
+conda activate llm-compressor
+pip install llmcompressor
+```
