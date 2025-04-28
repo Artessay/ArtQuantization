@@ -1,35 +1,19 @@
-from transformers import AutoTokenizer
-from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
+from datasets import load_dataset
+from gptqmodel import GPTQModel, QuantizeConfig
 
-pretrained_model_dir = "Qwen/Qwen2.5-32B-Instruct"
-quantized_model_dir = "Qwen2.5-32B-Instruct-GPTQ-4bit"
+model_id = "Qwen/Qwen2.5-32B-Instruct"
+quant_path = "Qwen2.5-32B-Instruct-GPTQ-4bit"
 
-tokenizer = AutoTokenizer.from_pretrained(pretrained_model_dir, use_fast=True)
-examples = [
-    tokenizer(
-        "auto-gptq is an easy-to-use model quantization library with user-friendly apis, based on GPTQ algorithm."
-    )
-]
+calibration_dataset = load_dataset(
+    "mit-han-lab/pile-val-backup",
+    split="validation"
+  ).select(range(1024))["text"]
 
-quantize_config = BaseQuantizeConfig(
-    bits=4,  # quantize model to 4-bit
-    group_size=128,  # it is recommended to set the value to 128
-    desc_act=False,  # set to False can significantly speed up inference but the perplexity may slightly bad
-)
+quant_config = QuantizeConfig(bits=4, group_size=128)
 
-# load un-quantized model, by default, the model will always be loaded into CPU memory
-model = AutoGPTQForCausalLM.from_pretrained(pretrained_model_dir, quantize_config)
+model = GPTQModel.load(model_id, quant_config, device_map="auto", device="cuda")
 
-# quantize model, the examples should be list of dict whose keys can only be "input_ids" and "attention_mask"
-model.quantize(examples)
+# increase `batch_size` to match gpu/vram specs to speed up quantization
+model.quantize(calibration_dataset, batch_size=1)
 
-# save quantized model using safetensors
-model.save_quantized(quantized_model_dir, use_safetensors=True)
-
-# push quantized model to Hugging Face Hub.
-# to use use_auth_token=True, Login first via huggingface-cli login.
-# or pass explcit token with: use_auth_token="hf_xxxxxxx"
-# (uncomment the following three lines to enable this feature)
-# repo_id = f"YourUserName/{quantized_model_dir}"
-# commit_message = f"AutoGPTQ model for {pretrained_model_dir}: {quantize_config.bits}bits, gr{quantize_config.group_size}, desc_act={quantize_config.desc_act}"
-# model.push_to_hub(repo_id, commit_message=commit_message, use_auth_token=True)
+model.save(quant_path)
