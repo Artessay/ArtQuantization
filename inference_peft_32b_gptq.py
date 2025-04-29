@@ -1,6 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-model_name = "/data/Qwen/Qwen2.5-32B-Instruct-GPTQ-INT8"
+model_name = "/data/Qwen/Qwen2.5-32B-Instruct-Medical-GPTQ-W4A8"
 
 model = AutoModelForCausalLM.from_pretrained(
     model_name,

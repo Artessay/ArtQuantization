@@ -21,13 +21,19 @@ Qwen2.5-32B-Instruct-GPTQ-INT8:
 
 * 2 * RTX3090: OOM
 * 4 * RTX3090: 25G for the maximum one
-* 8 * RTX3090: G for the maximum one
+* 8 * RTX3090: 15G for the maximum one
 
-Qwen2.5-32B-Instruct-GPTQ-INT4:
+Qwen2.5-32B-Instruct-GPTQ-W4A16:
 
-* 2 * RTX3090: G for the maximum one
+* 2 * RTX3090: OOM
 * 4 * RTX3090: 25G for the maximum one
-* 8 * RTX3090: G for the maximum one
+* 8 * RTX3090: 15G for the maximum one
+
+Qwen2.5-32B-Instruct-GPTQ-W4A8:
+
+* 2 * RTX3090: OOM
+* 4 * RTX3090: 24G for the maximum one
+* 8 * RTX3090: 14G for the maximum one
 
 ### AWQ
 

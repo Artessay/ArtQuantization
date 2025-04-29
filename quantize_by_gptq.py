@@ -7,7 +7,7 @@ from llmcompressor import oneshot
 # quant_path = "Qwen2.5-32B-Instruct-GPTQ-INT8"
 scheme="W4A16"
 model_path = "/data/Qwen/Qwen2.5-32B-Instruct-Medical"
-quant_path = "/data/Qwen/Qwen2.5-32B-Instruct-Medical-GPTQ-INT4"
+quant_path = "/data/Qwen/Qwen2.5-32B-Instruct-Medical-GPTQ-W4A16"
 
 # Select quantization algorithm. In this case, we:
 #   * apply SmoothQuant to make the activations easier to quantize
