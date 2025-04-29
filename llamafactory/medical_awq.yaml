@@ -1,0 +1,4 @@
+model_name_or_path: /data/Qwen/Qwen2.5-32B-Instruct-Medical-AWQ
+template: qwen
+infer_backend: vllm  
+infer_dtype: float16
