@@ -1,4 +1,3 @@
-import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 model_name = "/data/Qwen/Qwen2.5-32B-Instruct-INT8"
