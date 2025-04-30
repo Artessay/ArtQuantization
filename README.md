@@ -1,5 +1,17 @@
 # ArtQuantization
 
+## Requirements
+
+```sh
+conda create -n quantization python=3.12 -y
+conda activate quantization
+pip install peft
+pip install autoawq
+pip install llmcompressor
+```
+
+## Evaluation Results
+
 Qwen2.5-7B-Instruct:
 
 * 2 * RTX3090: 8G for the maximum one
@@ -45,12 +57,4 @@ The performance is good, however, Tesla-V100 do not support AWQ model.
 
 It takes me about 4 hour to quantize Qwen2.5-32B-Instruct by GPTQ-INT4 algorithm.
 
-### Requirements
-
-```sh
-conda create -n quantization python=3.12 -y
-conda activate quantization
-pip install peft
-pip install autoawq
-pip install llmcompressor
-```
+But the memory usage for quantized model is even larger than that for base model.
