@@ -1,8 +1,12 @@
-import torch
-
 from typing import Tuple
+
+import torch
 from llmcompressor.modifiers.quantization import GPTQModifier
-from llmcompressor.modifiers.quantization.gptq.gptq_quantize import accumulate_hessian, make_empty_hessian
+from llmcompressor.modifiers.quantization.gptq.gptq_quantize import (
+    accumulate_hessian,
+    make_empty_hessian,
+)
+
 
 # Manually define the get_execution_device function
 def get_execution_device(model: torch.nn.Module) -> torch.device:

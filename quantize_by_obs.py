@@ -1,5 +1,5 @@
-from llmcompressor.modifiers.smoothquant import SmoothQuantModifier
 from llmcompressor import oneshot
+from llmcompressor.modifiers.smoothquant import SmoothQuantModifier
 
 from modifiers import GPTQModifierWithOBSCorrection
 
