@@ -4,7 +4,7 @@ from llmcompressor.modifiers.smoothquant import SmoothQuantModifier
 from modifiers import GPTQModifierWithShapleyCorrection
 
 # scheme="FP8"
-scheme="W8A16"
+scheme = "W8A16"
 model_path = "/data/Qwen/Qwen2.5-7B-Instruct"
 quant_path = f"{model_path}-ShapleyGPTQ-{scheme}"
 print(quant_path)

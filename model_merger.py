@@ -1,5 +1,6 @@
 from peft import PeftModel
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
 
 def merge_peft_model(model_path: str, adapter_path: str, save_path: str):
     """
@@ -20,10 +21,10 @@ def merge_peft_model(model_path: str, adapter_path: str, save_path: str):
 
     print(f"model saved to {save_path}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     model_path = "/data/Qwen/Qwen2.5-32B-Instruct"
     adapter_path = "/data/Qwen/Qwen2.5-32B-Instruct-Medical-Adapter"
     save_path = "/data/Qwen/Qwen2.5-32B-Instruct-Medical"
 
     merge_peft_model(model_path, adapter_path, save_path)
-

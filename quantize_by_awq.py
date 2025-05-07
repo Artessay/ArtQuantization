@@ -5,7 +5,7 @@ from transformers import AutoTokenizer
 # quant_path = "Qwen2.5-32B-Instruct-AWQ"
 model_path = "/data/Qwen/Qwen2.5-32B-Instruct-Medical"
 quant_path = "/data/Qwen/Qwen2.5-32B-Instruct-Medical-AWQ"
-quant_config = { "zero_point": True, "q_group_size": 128, "w_bit": 4, "version": "GEMM" }
+quant_config = {"zero_point": True, "q_group_size": 128, "w_bit": 4, "version": "GEMM"}
 
 # Load model
 model = AutoAWQForCausalLM.from_pretrained(model_path)
