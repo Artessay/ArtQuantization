@@ -1,0 +1,4 @@
+from .shapley_modifier import GPTQModifierWithShapleyCorrection
+
+from llmcompressor.modifiers.factory import ModifierFactory
+ModifierFactory._registered_registry["GPTQModifierWithShapleyCorrection"] = GPTQModifierWithShapleyCorrection
