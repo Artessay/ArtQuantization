@@ -16,24 +16,6 @@ def get_execution_device(model: torch.nn.Module) -> torch.device:
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-# # Shapley correction function
-# def apply_OBS_correction(theta: torch.Tensor, H: torch.Tensor, alpha=0.1) -> torch.Tensor:
-#     """
-#     Apply Shapley correction to the Hessian matrix.
-
-#     :param theta: The weights (parameters) of the module
-#     :param H: The Hessian matrix
-#     :param alpha: The correction factor (default is 0.1)
-#     :return: Corrected Hessian matrix
-#     """
-#     eps = 1e-6
-#     # print("🔥  Shapley correction triggered")
-#     # Transpose theta for easier calculations
-#     H_diag = torch.diag(H)  # Extract the diagonal of the Hessian
-
-#     return torch.diag_embed(H_diag)
-
-
 def apply_OBS_correction(theta: torch.Tensor, H: torch.Tensor, alpha=0.1) -> torch.Tensor:
     """
     Apply Shapley correction to the Hessian matrix.
