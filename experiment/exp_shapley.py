@@ -78,7 +78,7 @@ if __name__ == "__main__":
     duration = end_time - start_time
 
     with open("result-time.log", "a") as f:
-        f.write("Script: quantize_by_shapley.py\n")
+        f.write("Script: exp_shapley.py\n")
         f.write(f"Model: {model_path}\n")
         f.write(f"Scheme: {scheme}\n")
         f.write(f"Dataset: {dataset}\n")
