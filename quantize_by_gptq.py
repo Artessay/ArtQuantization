@@ -2,7 +2,7 @@ from llmcompressor.modifiers.smoothquant import SmoothQuantModifier
 from llmcompressor.modifiers.quantization import GPTQModifier
 from llmcompressor import oneshot
 
-scheme="W8A16"
+scheme="W4A16"  # choice [W4A16, W8A8, W8A16, FP8]
 model_path = "/data/Qwen/Qwen2.5-7B-Instruct"
 quant_path = f"{model_path}-GPTQ-{scheme}"
 

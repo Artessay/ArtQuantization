@@ -3,8 +3,7 @@ from llmcompressor import oneshot
 
 from modifiers import GPTQModifierWithShapleyCorrection
 
-# scheme="FP8"
-scheme="W8A16"
+scheme="W8A16"  # choice [W4A16, W8A8, W8A16, FP8]
 model_path = "/data/Qwen/Qwen2.5-7B-Instruct"
 quant_path = f"{model_path}-ShapleyGPTQ-{scheme}"
 print(quant_path)
