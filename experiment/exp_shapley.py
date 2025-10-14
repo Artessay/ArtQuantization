@@ -44,7 +44,7 @@ if __name__ == "__main__":
     dataset = args.dataset
     dataset_config = args.dataset_config
     num_calibration_samples = args.num_calibration_samples
-    quant_path = f"{model_path}-shapley-{scheme}-{dataset}-num-samples-{num_calibration_samples}"
+    quant_path = f"{model_path}-shapley-{scheme}-{dataset}-samples-{num_calibration_samples}"
     quant_path += f"-alpha-{args.alpha}"
     quant_path += f"-v3"
 
