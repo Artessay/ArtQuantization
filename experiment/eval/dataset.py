@@ -18,11 +18,7 @@ class PromptDataset(Dataset):
         config (OmegaConf): the data config
     """
 
-    def __init__(self, parquet_file: str, tokenizer: PreTrainedTokenizer, config: dict = None):
-        # prompt_key = config.get("prompt_key", "prompt")
-        # prompt_dict_keys = config.get("prompt_dict_keys", None)
-        # response_key = config.get("response_key", "response")
-        # response_dict_keys = config.get("response_dict_keys", None)
+    def __init__(self, parquet_file: str, tokenizer: PreTrainedTokenizer, config: dict = {}):
         max_length = config.get("max_length", 1024)
         truncation = config.get("truncation", "error")
 

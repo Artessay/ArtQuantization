@@ -1,7 +1,6 @@
 import os
 import torch
 import random
-import logging
 import argparse
 import numpy as np
 
@@ -13,30 +12,6 @@ def seed_everything(seed):
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     torch.backends.cudnn.deterministic = True
-
-
-def setup_logger(log_file, level=logging.INFO) -> logging.Logger:
-    logger = logging.getLogger(__name__)
-    logger.setLevel(level)
-
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-
-    # console output
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
-    console_handler.setFormatter(formatter)
-    logger.addHandler(console_handler)
-
-    # file output
-    if log_file:
-        log_dir = os.path.dirname(log_file)
-        os.makedirs(log_dir, exist_ok=True)
-        file_handler = logging.FileHandler(log_file, mode="w")  # use 'w' to overwrite existing file, default is 'a' (append)
-        file_handler.setLevel(logging.INFO)
-        file_handler.setFormatter(formatter)
-        logger.addHandler(file_handler)
-
-    return logger
 
 def get_args():
     """
@@ -66,14 +41,3 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
     print(args)
-    
-    experiment_name = get_experiment_name(
-        model_name=args.model,
-        dataset_name=args.dataset,
-        mode=args.mode,
-        seed=args.seed,
-        activate_ratio=0.1,  # Placeholder, replace with actual value
-        activate_top_percentile=False,  # Placeholder, replace with actual value
-        is_train=args.train
-    )
-    print(f"Experiment Name: {experiment_name}")
