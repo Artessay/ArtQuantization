@@ -1,1 +1,1 @@
-python inference.py -p Qwen/Qwen2.5-14B-Instruct-shapley-W4A16-gsm8k-samples-512-alpha-0.01-v3
+python inference.py -p Qwen/Qwen2.5-14B-Instruct-shapley-W4A16-gsm8k-samples-512-alpha-0.0-v3

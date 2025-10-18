@@ -60,14 +60,14 @@ def apply_shapley_correction(
     # Compute the original Shapley weight (这就是W_original)
     W_original = torch.abs(shapley_sum) / (torch.abs(raw_sum) + eps)  # fl32
 
-    # 应用非线性变换得到修正后的权重（如果指定了修正器）
-    if correction_type is None:
-        correction_type = "no_nonlinear_correction"
         
     weight = W_original.clone()
 
-    if correction_type == "no_nonlinear_correction":
-        weight = torch.clamp(weight, min=1.0, max=100.0)
+    # 应用非线性变换得到修正后的权重（如果指定了修正器）
+    if correction_type is None:
+        pass
+    elif correction_type == "clamp":
+        weight = torch.clamp(weight, min=1.0, max=100.0)    # decrease performance; 分析 scale，对比INT8的均值，来确定scale
     elif correction_type == "log_rescale":
         weight = torch.clamp(weight, min=1.0, max=100.0)
         weight = log_rescale(weight)
@@ -80,8 +80,8 @@ def apply_shapley_correction(
     elif correction_type == "piecewise_power_transform":
         weight = piecewise_power_transform(weight)
     elif correction_type == "sigmoid_plus_one":
-        # # clip %5
-        # # 计算第5%和第95%分位数
+        # clip %5
+        # 计算第5%和第95%分位数
         q_05 = torch.quantile(weight, 0.05)  # 第5%分位数（下限）
         q_95 = torch.quantile(weight, 0.95)  # 第95%分位数（上限）
 
