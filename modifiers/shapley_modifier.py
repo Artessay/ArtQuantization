@@ -91,6 +91,15 @@ def apply_shapley_correction(
     else:
         raise ValueError(f"Invalid non-linearity modifier: {correction_type}")
 
+    # Apply the Shapley correction to the diagonal of Hessian
+    # v1
+    corrected_diag = alpha * weight * H_diag + (1 - alpha) * H_diag
+    return torch.diag_embed(corrected_diag)
+
+    # # v2
+    # corrected_H = alpha * weight * torch.diag_embed(H_diag) + (1 - alpha) * H
+    # return corrected_H
+    
     # v3
     H_diag_corrected = alpha * weight * H_diag + (1 - alpha) * H_diag  # fl32
     corrected_H = H.clone()  # fl32

@@ -61,7 +61,7 @@ def evaluate(args):
     model_name = args.model
     dataset_name = args.dataset
 
-    output_path = f"outputs/{model_name}.parquet"
+    output_path = f"outputs/{model_name}_{dataset_name}.parquet"
     dataset = pd.read_parquet(output_path)
 
     responses = dataset["responses"]

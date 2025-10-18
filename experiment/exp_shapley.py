@@ -46,7 +46,7 @@ if __name__ == "__main__":
     num_calibration_samples = args.num_calibration_samples
     quant_path = f"{model_path}-shapley-{scheme}-{dataset}-samples-{num_calibration_samples}"
     quant_path += f"-alpha-{args.alpha}"
-    quant_path += f"-v3"
+    quant_path += f"-v1"
 
     print(f"Quantization path: {quant_path}")
 
