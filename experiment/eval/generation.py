@@ -52,7 +52,7 @@ def generate(args):
     dataframe["responses"] = output_list
 
     # write to a new parquet
-    output_path = f"outputs/{model_name}.parquet"
+    output_path = f"outputs/{model_name}_{dataset_name}.parquet"
     output_dir = os.path.dirname(output_path)
     os.makedirs(output_dir, exist_ok=True)
     dataframe.to_parquet(output_path)
