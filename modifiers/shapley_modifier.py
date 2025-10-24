@@ -15,6 +15,7 @@ from modifiers.utils import (
     log_rescale,
     piecewise_power_transform,
     sigmoid_plus_one,
+    quantile_mapping,
 )
 
 
@@ -62,6 +63,7 @@ def apply_shapley_correction(
 
         
     weight = W_original.clone()
+    # print(weight.min(), weight.max(), weight.mean())
 
     # 应用非线性变换得到修正后的权重（如果指定了修正器）
     if correction_type is None:
@@ -88,17 +90,19 @@ def apply_shapley_correction(
         # 将权重裁剪到[q_05, q_95]范围内
         weight = torch.clamp(weight, min=q_05, max=q_95)
         weight = sigmoid_plus_one(weight)
+    elif correction_type == "quantile_mapping":
+        weight = quantile_mapping(weight, target_min=1.0, target_max=10.0)
     else:
         raise ValueError(f"Invalid non-linearity modifier: {correction_type}")
 
     # Apply the Shapley correction to the diagonal of Hessian
-    # v1
+    # v1: alpha is 0 equal to OBS, only use diag elements
     corrected_diag = alpha * weight * H_diag + (1 - alpha) * H_diag
     return torch.diag_embed(corrected_diag)
 
-    # # v2
-    # corrected_H = alpha * weight * torch.diag_embed(H_diag) + (1 - alpha) * H
-    # return corrected_H
+    # v2: alpha is 0 equal to GPTQ, use all elements in Hessian
+    corrected_H = alpha * weight * torch.diag_embed(H_diag) + (1 - alpha) * H
+    return corrected_H
     
     # v3
     H_diag_corrected = alpha * weight * H_diag + (1 - alpha) * H_diag  # fl32
@@ -121,6 +125,7 @@ class GPTQModifierWithShapleyCorrection(GPTQModifier):
             raise ValueError("alpha must be provided")
         # 重置计数器
         GPTQModifierWithShapleyCorrection._module_counter = 0
+        correction_type = None # "quantile_mapping"
 
     def calibrate_module(
         self,

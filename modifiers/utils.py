@@ -199,3 +199,19 @@ def sigmoid_plus_one(weight):
     result = sigmoid_weight + 1
 
     return result
+
+def quantile_mapping(x: torch.Tensor, target_min: float, target_max: float) -> torch.Tensor:
+    # 计算原始数据的分位数（每个元素的累积概率）
+    # 注意：需处理重复值，这里用线性插值计算分位数
+    sorted_x, _ = torch.sort(x.flatten())  # 展平并排序
+    n = sorted_x.numel()
+    quantiles = torch.linspace(0, 1, n, device=x.device)  # 分位数坐标（0~1）
+    
+    # 对于x中的每个元素，找到其对应的分位数（通过查找在sorted_x中的位置）
+    # 使用torch.searchsorted获取索引
+    indices = torch.searchsorted(sorted_x, x.flatten(), right=True) - 1
+    indices = torch.clamp(indices, 0, n-1)  # 边界处理
+    q = quantiles[indices].reshape(x.shape)  # 恢复原始形状
+    
+    # 映射到目标范围 [target_min, target_max]
+    return target_min + q * (target_max - target_min)

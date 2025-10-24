@@ -46,7 +46,7 @@ if __name__ == "__main__":
     num_calibration_samples = args.num_calibration_samples
     quant_path = f"{model_path}-shapley-{scheme}-{dataset}-samples-{num_calibration_samples}"
     quant_path += f"-alpha-{args.alpha}"
-    quant_path += f"-v1"
+    quant_path += f"-v5"
 
     print(f"Quantization path: {quant_path}")
 
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     start_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     recipe = [
-        SmoothQuantModifier(smoothing_strength=0.8),
+        # SmoothQuantModifier(smoothing_strength=0.8),
         GPTQModifierWithShapleyCorrection(
             scheme=scheme,
             targets="Linear",
